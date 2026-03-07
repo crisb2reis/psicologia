@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Award, BookOpen, Clock, Heart } from 'lucide-react';
 
@@ -89,10 +90,11 @@ export const About = () => {
                     >
                         <div className="relative w-full aspect-[4/5] max-w-[450px] mx-auto overflow-hidden rounded-[50px] border-8 border-white shadow-2xl">
                             <div className="absolute inset-0 bg-primary/20 mix-blend-multiply transition-all hover:opacity-0 pointer-events-none"></div>
-                            <img
-                                src="/psicologia/hero-image.png"
+                            <Image
+                                src="/hero-image.png"
                                 alt="Psicologa Especialista"
-                                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                                fill
+                                className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
                             />
                         </div>
                         {/* Quote Badge */}
