@@ -1,0 +1,359 @@
+Landing Page Psicologia Pro (Alta Conversão)
+
+Este plano evolui a landing page para um sistema completo de captação de pacientes, combinando UX terapêutica, automação de agendamento e otimização de marketing digital.
+
+Objetivos principais:
+
+aumentar agendamentos
+
+melhorar taxa de conversão
+
+automatizar contato com pacientes
+
+melhorar posicionamento no Google
+
+Arquitetura Tecnológica
+
+Stack principal:
+
+Frontend
+
+Next.js (App Router)
+
+Tailwind CSS
+
+Framer Motion (animações suaves)
+
+Backend / Dados
+
+Supabase (PostgreSQL + Auth + Edge Functions)
+
+Integrações externas
+
+Google Calendar API
+
+WhatsApp Click-to-Chat
+
+Google Analytics
+
+Meta Pixel
+
+Hospedagem
+
+GitHub Pages
+
+Estrutura de Conversão (CRO)
+
+A landing page deve seguir um funil de conversão psicológico:
+
+1️⃣ Identificação do problema
+2️⃣ Construção de confiança
+3️⃣ Apresentação da solução
+4️⃣ Redução de risco
+5️⃣ Chamada para ação
+
+Estrutura da Landing Page
+1. Hero Section
+
+Elementos obrigatórios:
+
+headline emocional
+
+subtítulo empático
+
+CTA visível
+
+foto acolhedora
+
+Exemplo:
+
+Headline
+
+"Cuidar da sua saúde emocional pode transformar sua vida."
+
+Subheadline
+
+"Atendimento psicológico para ansiedade, estresse e desenvolvimento emocional."
+
+Botões:
+
+Agendar Sessão
+
+Falar no WhatsApp
+
+2. Seção de Problemas (Empatia)
+
+Cards com problemas comuns:
+
+ansiedade
+
+estresse
+
+conflitos emocionais
+
+dificuldades em relacionamentos
+
+baixa autoestima
+
+burnout
+
+Objetivo: fazer o visitante se identificar rapidamente.
+
+3. Sobre o Psicólogo
+
+Informações importantes:
+
+foto profissional
+
+formação
+
+registro CRP
+
+abordagem terapêutica
+
+experiência
+
+Adicionar bloco de confiança profissional:
+
+✔ Atendimento ético
+✔ Sigilo absoluto
+✔ Ambiente acolhedor
+
+4. Como Funciona a Terapia
+
+Explicação simples em 3 passos:
+
+Primeira sessão de avaliação
+
+Processo terapêutico personalizado
+
+Evolução emocional e autoconhecimento
+
+5. Especialidades
+
+Cards:
+
+Ansiedade
+
+Depressão
+
+Terapia para relacionamentos
+
+Estresse e burnout
+
+Autoconhecimento
+
+Desenvolvimento emocional
+
+6. Depoimentos (Prova Social)
+
+Carrossel com avaliações.
+
+Formato recomendado:
+
+⭐ ⭐ ⭐ ⭐ ⭐
+
+"Muito profissional e acolhedora. A terapia tem me ajudado muito."
+
+Nome abreviado.
+
+7. FAQ
+
+Perguntas comuns:
+
+Como funciona a primeira sessão?
+
+Quanto tempo dura a terapia?
+
+O atendimento pode ser online?
+
+A terapia é confidencial?
+
+Como agendar uma sessão?
+
+8. Agendamento Inteligente
+
+Formulário integrado ao Google Calendar.
+
+Campos:
+
+nome
+
+WhatsApp
+
+email
+
+tipo de atendimento
+
+data
+
+horário
+
+Após confirmação:
+
+salvar no Supabase
+
+criar evento no Google Calendar
+
+mostrar tela de confirmação
+
+Automação de WhatsApp
+
+Adicionar botão flutuante.
+
+Link automático:
+
+https://wa.me/5511999999999
+
+Mensagem pré-preenchida:
+
+Olá, gostaria de agendar uma sessão de terapia.
+Sistema de Captura de Leads
+
+Se o visitante preencher:
+
+nome
+
+WhatsApp
+
+mas não concluir agendamento, salvar no banco como lead.
+
+Tabela:
+
+consultas_psicologia
+
+Status:
+
+lead
+agendado
+confirmado
+cancelado
+SEO Local (Extremamente Importante)
+
+Configurar SEO para aparecer em buscas como:
+
+psicólogo + cidade
+
+terapia online
+
+psicólogo ansiedade
+
+No Next.js adicionar:
+
+meta title
+
+meta description
+
+Open Graph
+
+Exemplo:
+
+Title
+
+Psicóloga | Atendimento para Ansiedade e Estresse
+
+Description
+
+Atendimento psicológico humanizado para ansiedade, estresse e desenvolvimento emocional. Agende sua sessão online ou presencial.
+Analytics e Marketing
+
+Adicionar monitoramento:
+
+Google Analytics
+
+Eventos rastreados:
+
+clique no WhatsApp
+
+clique em agendar sessão
+
+envio de formulário
+
+agendamento concluído
+
+Meta Pixel
+
+Eventos:
+
+Lead
+
+Schedule
+
+Estrutura do Banco de Dados
+
+Tabela:
+
+consultas_psicologia
+
+Campos:
+
+id
+created_at
+nome
+whatsapp
+email
+tipo_atendimento
+data_hora
+status
+origem
+utm_source
+utm_campaign
+
+Isso permite rastrear origem dos pacientes.
+
+Segurança e Privacidade
+
+Por ser área de saúde mental:
+
+ativar RLS no Supabase
+
+coletar apenas dados essenciais
+
+implementar política de privacidade
+
+evitar armazenamento de dados sensíveis
+
+Otimização de Performance
+
+Aplicar:
+
+lazy loading de imagens
+
+compressão de assets
+
+preload de fontes
+
+imagens WebP
+
+Meta:
+
+Lighthouse Score > 90
+
+Plano de Verificação
+
+Testar:
+
+Responsividade
+
+mobile
+
+tablet
+
+desktop
+
+Fluxo de agendamento
+
+1 preencher formulário
+2 selecionar horário
+3 salvar no banco
+4 criar evento no calendário
+
+Conversão
+
+Testar:
+
+clique WhatsApp
+
+CTA
+
+formulário

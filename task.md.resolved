@@ -1,0 +1,26 @@
+# Plano de Tarefas: Landing Page Fisioterapia Pro
+
+- [x] Planejamento e Arquitetura
+    - [x] Criação do plano de implementação
+    - [x] Definição do esquema do banco de dados (Supabase)
+    - [x] Estrutura da API (Google Calendar)
+- [x] Configuração Inicial
+    - [x] Inicializar projeto Next.js (App Router, Tailwind, Lucide)
+    - [x] Configurar `output: export` para GitHub Pages
+    - [x] Configurar Supabase Client
+    - [x] Definir Design Tokens (cores, tipografia)
+- [x] Implementação da UI (Layout & Seções)
+    - [x] Layout Base (Header, Footer, Floating WhatsApp)
+    - [x] Seção Hero
+    - [x] Agitação do Problema (Cards de dor)
+    - [x] Seção Sobre & Jornada (Timeline)
+    - [x] Seção de Serviços & Prova Social (Slider)
+    - [x] FAQ & Onde Estamos (Accordion & Maps)
+- [x] Funcionalidades Mentais & Integrações
+    - [x] Componente de Agendamento Inteligente (Calendário)
+    - [x] Lógica de Lead Capture (Persistência parcial no Supabase)
+    - [x] Integração Google Calendar (Simulação e Link de Add to Calendar)
+- [x] Polimento & CRO
+    - [x] Otimização de Performance (Core Web Vitals)
+    - [x] Micro-animações e Transições
+    - [x] Verificação Final & Mobile-First check

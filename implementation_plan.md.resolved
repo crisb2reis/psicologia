@@ -1,0 +1,71 @@
+# Plano de Implementação: Landing Page Fisioterapia Pro
+
+Este documento detalha a estratégia para construir uma Landing Page (SPA) de alta performance para um consultório de fisioterapia, com foco em conversão (CRO) e integração de agendamento automático.
+
+## Visão Geral
+A aplicação será uma SPA (Single Page Application) desenvolvida com **Next.js (App Router)**, estilizada com **Tailwind CSS** e integrada ao **Supabase** para persistência de leads e ao **Google Calendar** para gestão de horários. O design é focado em alta conversão e estética premium (Teal/Aqua).
+
+## User Review Required
+> [!IMPORTANT]
+> A integração com o Google Calendar exige a configuração de uma **Service Account** ou **OAuth2**. Precisaremos que o usuário forneça as credenciais (JSON da Service Account) para o ambiente de produção.
+
+> [!NOTE]
+> **Paleta de Cores Inspirada em GFisio:**
+> - **Primária (Verde Teal):** `#2C7A7B` (Navegação, títulos e ícones).
+> - **Acento (Verde Menta):** `#48BB78` (CTAs e detalhes).
+> - **Fundo:** Off-white/Branco (`#FAFAFA`) para limpeza e organização.
+
+## Arquitetura e Estrutura
+
+### 1. Frontend (Next.js + Tailwind)
+- **Design System**: Configuração de tokens no `tailwind.config.js` (ou [globals.css](file:///dados/dev/fisioterapia/app-src/src/app/globals.css) via `@theme`) com as cores acima e fontes modernas (Inter).
+- **Componentes**: Estrutura modular dentro de `app-src/src/components`.
+- **Navegação**: Header fixo com links âncora para uma experiência de SPA fluida.
+
+### 2. Backend & Persistência (Supabase)
+- **Lead Capture**: Dados do formulário (`nome`, `whatsapp`, `email`, `data_hora`) salvos diretamente no Supabase.
+- **Tabela**: `consultas_fisioterapia` configurada com políticas de RLS adequadas.
+
+### 3. Deploy (GitHub Pages)
+- **Configuração Crítica**: Como o site é hospedado em um subdiretório (`/fisioterapia/`), o arquivo `next.config.ts` deve conter:
+    ```typescript
+    basePath: "/fisioterapia",
+    assetPrefix: "/fisioterapia",
+    ```
+- **Formato**: `output: export` para geração de site estático.
+- **Workflow**: GitHub Actions automático disparado por cada push na `main`.
+
+---
+
+## Plano de Verificação
+
+### Testes Automatizados
+- **Unitários**: Validar funções de formatação e lógica de componentes.
+- **Integração**: Testar a comunicação com as APIs do Supabase.
+
+### Verificação Manual
+1. **Estilização**: Confirmar que o CSS e JS carregam corretamente em `crisb2reis.github.io/fisioterapia/`.
+2. **Responsividade**: Validar layout em dispositivos mobile (Desktop vs Mobile).
+3. **Formulários**: Testar o envio de leads e a persistência no banco de dados.
+
+---
+
+## Lições Aprendidas (Post-Mortem Técnico)
+
+### 1. Naming & Estrutura de Pastas
+- **Problema**: Conflitos de pacotes e regras do Next.js ao tentar inicializar na raiz com diretórios pai em maiúsculas.
+- **Solução**: Mover o código fonte para `app-src` e manter o `.github` e outros arquivos de configuração global na raiz do repositório.
+
+### 2. Deploy em Subdiretórios (GitHub Pages)
+- **Problema**: O site carrega como HTML puro (404 no CSS/JS) se o `basePath` não for definido.
+- **Solução**: Adicionar `basePath` e `assetPrefix` no `next.config.ts` apontando para o nome do repositório (`/fisioterapia`).
+
+### 3. Ordem de Imports CSS
+- **Insight**: O `@import` do Google Fonts deve ser a primeira linha no `globals.css`, antes do `@import "tailwindcss"`, para seguir as especificações do CSS e garantir o carregamento das fontes.
+
+---
+
+## Próximos Passos
+1. **Concluir Integração Google Calendar**: Configurar credenciais para sincronização de horários reais.
+2. **Otimização de Imagens**: Garantir que todos os ativos visuais usem as novas configurações de `unoptimized: true` para compatibilidade com exportação estática.
+3. **Monitoramento**: Acompanhar o primeiro deploy completo com as correções de estilo.
