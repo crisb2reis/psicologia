@@ -75,7 +75,7 @@ export const Hero = () => {
 
                             <div className="relative z-10 w-full h-full rounded-[40px] overflow-hidden shadow-2xl">
                                 <Image
-                                    src="/hero-image.png"
+                                    src="/psicologia/hero-image.png"
                                     alt="Psicóloga Profissional"
                                     fill
                                     className="object-cover"
