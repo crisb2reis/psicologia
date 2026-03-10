@@ -2,17 +2,50 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Send, Calendar, Clock, User, Phone, Mail, CheckCircle, ArrowRight } from 'lucide-react';
+import { Send, Calendar, Clock, User, Phone, Mail, CheckCircle, ArrowRight, Loader2 } from 'lucide-react';
+
+import { createClient } from '@/lib/supabase/client';
+
+const TENANT_ID = "660e8400-e29b-41d4-a716-446655440005";
 
 export const ContactForm = () => {
     const [isSubmitted, setIsSubmitted] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [formData, setFormData] = React.useState({
+        nome: '',
+        whatsapp: '',
+        email: '',
+        turno: 'Manhã',
+        tipo: 'Online (Vídeo)'
+    });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Simulate submission
-        setTimeout(() => {
+        setIsLoading(true);
+
+        try {
+            const supabase = createClient();
+
+            const { error } = await supabase.from('leads').insert({
+                tenant_id: TENANT_ID,
+                name: formData.nome,
+                phone: formData.whatsapp,
+                email: formData.email,
+                status: 'NOVO',
+                extra_data: {
+                    turno: formData.turno,
+                    tipo_atendimento: formData.tipo
+                }
+            });
+
+            if (error) throw error;
             setIsSubmitted(true);
-        }, 1000);
+        } catch (error) {
+            console.error('Erro ao salvar lead:', error);
+            alert('Ocorreu um erro ao enviar sua solicitação. Por favor, tente novamente.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     if (isSubmitted) {
@@ -120,6 +153,8 @@ export const ContactForm = () => {
                                         <User className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                         <input
                                             required
+                                            value={formData.nome}
+                                            onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
                                             className="w-full bg-secondary/50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary ring-inset transition-all font-medium text-foreground outline-none placeholder:text-slate-400"
                                             placeholder="Ex: João da Silva"
                                         />
@@ -132,6 +167,8 @@ export const ContactForm = () => {
                                         <Phone className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                         <input
                                             required
+                                            value={formData.whatsapp}
+                                            onChange={(e) => setFormData({ ...formData, whatsapp: e.target.value })}
                                             placeholder="Ex: (11) 99999-9999"
                                             className="w-full bg-secondary/50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary ring-inset transition-all font-medium text-foreground outline-none placeholder:text-slate-400"
                                         />
@@ -143,6 +180,8 @@ export const ContactForm = () => {
                                     <div className="relative">
                                         <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 group-focus-within:text-primary transition-colors" />
                                         <input
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             className="w-full bg-secondary/50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary ring-inset transition-all font-medium text-foreground outline-none placeholder:text-slate-400"
                                             placeholder="Ex: joao@email.com"
                                         />
@@ -154,7 +193,10 @@ export const ContactForm = () => {
                                         <label className="text-xs font-black uppercase tracking-widest text-muted block mb-3 px-2">Melhor Turno</label>
                                         <div className="relative">
                                             <Clock className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                            <select className="w-full bg-secondary/50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary ring-inset transition-all font-medium text-foreground outline-none appearance-none cursor-pointer">
+                                            <select
+                                                value={formData.turno}
+                                                onChange={(e) => setFormData({ ...formData, turno: e.target.value })}
+                                                className="w-full bg-secondary/50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary ring-inset transition-all font-medium text-foreground outline-none appearance-none cursor-pointer">
                                                 <option>Manhã</option>
                                                 <option>Tarde</option>
                                                 <option>Noite</option>
@@ -165,7 +207,10 @@ export const ContactForm = () => {
                                         <label className="text-xs font-black uppercase tracking-widest text-muted block mb-3 px-2">Tipo de Atendimento</label>
                                         <div className="relative">
                                             <Calendar className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                                            <select className="w-full bg-secondary/50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary ring-inset transition-all font-medium text-foreground outline-none appearance-none cursor-pointer">
+                                            <select
+                                                value={formData.tipo}
+                                                onChange={(e) => setFormData({ ...formData, tipo: e.target.value })}
+                                                className="w-full bg-secondary/50 border-none rounded-2xl py-4 pl-14 pr-6 focus:ring-2 focus:ring-primary ring-inset transition-all font-medium text-foreground outline-none appearance-none cursor-pointer">
                                                 <option>Online (Vídeo)</option>
                                                 <option>Presencial</option>
                                             </select>
@@ -178,10 +223,20 @@ export const ContactForm = () => {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 type="submit"
-                                className="w-full bg-primary text-white py-5 rounded-3xl text-lg font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-3 mt-10 hover:opacity-90 transition-all"
+                                disabled={isLoading}
+                                className="w-full bg-primary text-white py-5 rounded-3xl text-lg font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-3 mt-10 hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Solicitar Meu Agendamento
-                                <Send className="w-5 h-5" />
+                                {isLoading ? (
+                                    <>
+                                        Enviando...
+                                        <Loader2 className="w-5 h-5 animate-spin" />
+                                    </>
+                                ) : (
+                                    <>
+                                        Solicitar Meu Agendamento
+                                        <Send className="w-5 h-5" />
+                                    </>
+                                )}
                             </motion.button>
 
                             <p className="text-[10px] font-bold uppercase tracking-widest text-center text-muted/60 px-4 leading-relaxed">
